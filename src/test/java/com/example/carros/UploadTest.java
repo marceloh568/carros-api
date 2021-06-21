@@ -1,6 +1,5 @@
 package com.example.carros;
 
-
 import com.example.carros.api.upload.UploadInput;
 import com.example.carros.api.upload.UploadOutput;
 import com.example.carros.domain.upload.FirebaseStorageService;
@@ -18,19 +17,15 @@ import static junit.framework.TestCase.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = CarrosApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class UploadTest {
+public class UploadTest extends BaseAPITest {
     @Autowired
     protected TestRestTemplate rest;
 
     @Autowired
     private FirebaseStorageService service;
 
-    private TestRestTemplate basicAuth() {
-        return rest.withBasicAuth("admin","123");
-    }
-
     private UploadInput getUploadInput() {
-        UploadInput  upload = new UploadInput();
+        UploadInput upload = new UploadInput();
         upload.setFileName("nome.txt");
         // Base64 de Ricardo Lecheta
         upload.setBase64("UmljYXJkbyBMZWNoZXRh");
@@ -54,7 +49,7 @@ public class UploadTest {
         UploadInput upload = getUploadInput();
 
         // Insert
-        ResponseEntity<UploadOutput> response = basicAuth().postForEntity("/api/v1/upload", upload, UploadOutput.class);
+        ResponseEntity<UploadOutput> response = post("/api/v1/upload", upload, UploadOutput.class);
         System.out.println(response);
 
         // Verifica se criou
@@ -62,9 +57,9 @@ public class UploadTest {
 
         UploadOutput out = response.getBody();
         assertNotNull(out);
-        System.out.println(out);
 
         String url = out.getUrl();
+        System.out.println(url);
 
         // Faz o Get na URL
         ResponseEntity<String> urlResponse = rest.getForEntity(url, String.class);
