@@ -2,7 +2,7 @@ package com.example.carros;
 
 import com.example.carros.api.upload.UploadInput;
 import com.example.carros.api.upload.UploadOutput;
-import com.example.carros.domain.upload.FirebaseStorageService;
+import com.example.carros.api.upload.FirebaseStorageService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

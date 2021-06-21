@@ -1,6 +1,5 @@
-package com.example.carros.domain.upload;
+package com.example.carros.api.upload;
 
-import com.example.carros.api.upload.UploadInput;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.Acl;
 import com.google.cloud.storage.Blob;
@@ -13,9 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.Base64;
-import java.util.concurrent.TimeUnit;
 
 //https://firebase.google.com/docs/storage/admin/start
 @Service
