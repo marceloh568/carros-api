@@ -2,6 +2,7 @@ package com.example.carros.api.carros;
 
 import com.example.carros.api.infra.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -15,8 +16,8 @@ public class CarroService {
     @Autowired
     private CarroRepository rep;
 
-    public List<CarroDTO> getCarros() {
-        return rep.findAll().stream().map(CarroDTO::create).collect(Collectors.toList());
+    public List<CarroDTO> getCarros(Pageable pageable) {
+        return rep.findAll(pageable).stream().map(CarroDTO::create).collect(Collectors.toList());
 
 //        List<CarroDTO> list = new ArrayList<>();
 //        for(Carro c : carros){
@@ -39,8 +40,8 @@ public class CarroService {
         return carro.map(CarroDTO::create).orElseThrow(() -> new ObjectNotFoundException("Carro não encontrado"));
     }
 
-    public List<CarroDTO> getCarrosByTipo(String tipo) {
-        return rep.findByTipo(tipo).stream().map(CarroDTO::create).collect(Collectors.toList());
+    public List<CarroDTO> getCarrosByTipo(String tipo, Pageable pageable) {
+        return rep.findByTipo(tipo, pageable).stream().map(CarroDTO::create).collect(Collectors.toList());
     }
 
     public CarroDTO insert(Carro carro) {

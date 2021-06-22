@@ -1,6 +1,7 @@
 package com.example.carros.api.carros;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,9 @@ public class CarrosController {
     private CarroService service;
 
     @GetMapping
-    public ResponseEntity get(){
-        return ResponseEntity.ok(service.getCarros());
+    public ResponseEntity get(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                              @RequestParam(value = "size", defaultValue = "10") Integer size){
+        return ResponseEntity.ok(service.getCarros(PageRequest.of(page, size)));
         //return new ResponseEntity<>(service.getCarros(), HttpStatus.OK);
     }
 
@@ -30,8 +32,10 @@ public class CarrosController {
     }
 
     @GetMapping("/tipo/{tipo}")
-    public ResponseEntity getCarrosByTipo(@PathVariable("tipo") String tipo){
-        List<CarroDTO> carros = service.getCarrosByTipo(tipo);
+    public ResponseEntity getCarrosByTipo(@PathVariable("tipo") String tipo,
+                                          @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                          @RequestParam(value = "size", defaultValue = "10") Integer size){
+        List<CarroDTO> carros = service.getCarrosByTipo(tipo, PageRequest.of(page, size));
 
         return carros.isEmpty() ?
             ResponseEntity.noContent().build() :
